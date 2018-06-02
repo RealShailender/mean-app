@@ -1,15 +1,19 @@
-<nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="/"></a>
-    </div>
+<ul class="nav nav-pills">
+  <li class="nav-item">
+    <a class="nav-link" href="#/">Reactive Form</a>
+  </li>
+</ul>
+<div class="row">
+  <div class="col-sm-8">
+    <form>
+      <mat-form-field class="full-width">
+        <input matInput placeholder="Developer name" value="Shailender">
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <textarea matInput placeholder="Leave a comment"></textarea>
+      </mat-form-field>
+    </form>
   </div>
-</nav>
-<div class="container">
-    <div class="row">
-      <h2>My Tasklist</h2>
-    </div>
-  <div class="row">
-    <app-tasks></app-tasks>
-  </div>
+  <div class="col-sm-4">col-sm-4</div>
 </div>
