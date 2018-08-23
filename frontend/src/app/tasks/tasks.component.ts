@@ -9,6 +9,12 @@ import { TaskService } from '../task.service';
 export class TasksComponent implements OnInit {
   taskList: any;
   task: string = "";
+  isUpdate: boolean = false;
+  taskObj = {
+    title: '',
+    isDone: false,
+    _id: ''
+  };
   constructor(private taskService: TaskService) { }
 
   ngOnInit() {
@@ -24,6 +30,15 @@ export class TasksComponent implements OnInit {
   }
 
   addNewTask() {
+    if (this.isUpdate) {
+      this.updateTask();
+      this.isUpdate = false;
+    } else {
+      this.insertTask();
+    }
+  }
+
+  insertTask() {
     let newTask = {
       "title": this.task,
       "isDone": "false"
@@ -34,10 +49,32 @@ export class TasksComponent implements OnInit {
     this.task = "";
   }
 
+  updateTask() {
+    let newTask = {
+      "title": this.task,
+      "isDone": this.taskObj.isDone
+    }
+    this.taskService.updateTask(newTask, this.taskObj._id).subscribe(() => {
+      this.fetchTaskList();
+      this.taskObj = {
+        title: '',
+        isDone: false,
+        _id: ''
+      }
+    });
+    this.task = "";
+  }
+
   deleteTask(item) {
     this.taskService.deleteTask(item._id).subscribe(() => {
       this.fetchTaskList();
     });
+  }
+
+  editTask(task) {
+    this.task = task.title;
+    this.isUpdate = true;
+    this.taskObj = task;
   }
 
 }

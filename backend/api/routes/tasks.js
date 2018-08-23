@@ -32,7 +32,7 @@ router.delete('/:id', function (req, res, next) {
 });
 
 //Update Task
-router.put('/task/:id', function (req, res, next) {
+router.put('/:id', function (req, res, next) {
     var task = req.body;
     var updTask = {};
 
