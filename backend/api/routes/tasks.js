@@ -1,10 +1,9 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 var mongojs = require('mongojs');
-var db = mongojs('mongodb://ghatudb:hack123sole$@ds237855.mlab.com:37855/mytasklist', ['tasks'])
+var db = mongojs('mongodb://localhost:27017/node-rest-api', ['tasks'])
 
-//Get all tasks
-router.get('/tasks', function (req, res, next) {
+router.get('/', function (req, res, next) {
     db.tasks.find(function (err, tasks) {
         if (err) {
             res.send(err.json())
@@ -13,36 +12,17 @@ router.get('/tasks', function (req, res, next) {
     });
 });
 
-//Get single tasks
-router.get('/task/:id', function (req, res, next) {
-    db.tasks.findOne({ _id: mongojs.ObjectId(req.params.id) }, function (err, task) {
+router.post('/', function (req, res, next) {
+    db.tasks.save(req.body, (err, task) => {
         if (err) {
             res.send(err.json())
         }
-        res.json(task);
-    });
-});
-
-//save tasks
-router.post('/task', function (req, res, next) {
-    var task = req.body;
-    if (!task.title || (task.isDone + '')) {
-        res.status(400);
-        res.json({
-            "error": "Bad Data"
-        });
-    } else {
-        db.tasks.save(task, function (err, task) {
-            if (err) {
-                res.send(err.json())
-            }
-            res.json(tasks);
-        })
-    }
+        res.send(task);
+    })
 });
 
 //Delete 
-router.delete('/task/:id', function (req, res, next) {
+router.delete('/:id', function (req, res, next) {
     db.tasks.remove({ _id: mongojs.ObjectId(req.params.id) }, function (err, task) {
         if (err) {
             res.send(err.json())

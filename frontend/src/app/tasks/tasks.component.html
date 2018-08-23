@@ -1,19 +1,22 @@
-<form class="well">
-  <div class="form-group">
-    <input type="text" class="form-control" name="task" id="task"  placeholder="Add Task">
+<div class="row">
+  <div class="col-md-4 card">
+    <div class="form-group mx-sm-3 mb-2 card-body">
+      <input type="text" 
+             class="form-control" 
+             [(ngModel)]="task"
+             (keyup.enter)="addNewTask()"
+             placeholder="Add new task">
+    </div>
   </div>
-</form>
-
-<div class="task-list">
-  <div *ngFor="let task of taskList">
-    <div class="col-md-1">
-      <input type="checkbox">
-    </div>
-    <div class="col-md-7">
-      {{task.title}}
-    </div>
-    <div class="col-md-4">
-      <input type="button" value="Delete" class="btn btn-danger">
-    </div>
+  <div class="col-md-6 ml-auto">
+    <ul class="list-group" *ngFor="let item of taskList">
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        {{item.title}}
+        <span>
+          <i class="far fa-edit mr-1" (click)="editTask(item)"></i>
+          <i class="far fa-trash-alt" (click)="deleteTask(item)"></i>
+        </span>
+      </li>
+    </ul>
   </div>
 </div>
